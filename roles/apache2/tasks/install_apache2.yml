@@ -1,0 +1,28 @@
+- name: Installing Apache2 with the latest version
+  apt: 
+    name: apache2
+    state: latest
+  tags: installation
+
+- name: Configuring the apache2 ports.conf configuration file
+  template: 
+    src: templates/ports.conf.j2
+    dest: /etc/apache2/ports.conf
+  notify:
+    - Restart Apache2
+  tags: configuration
+
+- name: Configuring apache2 with index.html
+  template: 
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+  notify:
+    - Restart Apache2
+  tags: configuration
+
+- name: Ensuring that Apache is operational
+  service:
+    name: apache2
+    state: started
+  tags: always
+    

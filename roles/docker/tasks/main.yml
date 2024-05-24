@@ -1,0 +1,14 @@
+---
+# tasks file for roles/docker
+
+- name: Installing Docker from Role
+  include_tasks: install_docker.yml
+  when: destroy is undefined
+
+- name: Provision containers
+  include_tasks: start_containers.yml
+  when: destroy is undefined
+  
+- name: Destroy containers
+  include_tasks: destroy_containers.yml
+  when: destroy == "True"

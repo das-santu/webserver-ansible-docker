@@ -1,0 +1,6 @@
+- name: Destroy docker compose containers 
+  shell:
+    cmd: "docker compose -f docker-compose.yml down"
+    chdir: ~/ansible-project/
+  become: false
+  tags: [ 'destroy' ]

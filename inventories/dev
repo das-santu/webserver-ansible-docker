@@ -1,0 +1,16 @@
+[controller]
+localhost
+
+[proxy]
+proxy
+
+[webservers]
+web01
+web02
+
+[webstack:children]
+proxy
+webservers
+
+[all:vars]
+myenvironment=development

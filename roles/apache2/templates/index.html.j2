@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!</title>
+    <style>
+        body {
+            background-color: {{ html_body_color }};
+            text-align: center;
+        }
+
+        h1 {
+            color: aliceblue;
+            font-size: 100px;
+        }
+
+        h2 {
+            color: aliceblue;
+            font-size: 40px;
+        }
+
+        table,
+        th,
+        td {
+            border-collapse: collapse;
+            color: white;
+            font-size: 20px;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>{{ html_welcome_msg }}</h1>
+    <hr style="width:30%;color:white">
+    {% if ansible_facts['nodename'] == "web01" %}
+        <h2>I'm the Web Server-1</h2>
+    {% elif ansible_facts['nodename'] == "web02" %}
+        <h2>I'm the Web Server-2</h2>
+    {% else %}
+        <h2>I'm Unknown Web Server</h2>
+    {% endif %}
+    <hr style="width:30%;color:white">
+    <table class="center">
+        <tr>
+            <td>Running on <b>{{ myenvironment }}</b> environment</td>
+        </tr>
+        <tr>
+            <td><b>Type : </b>Apache2</td>
+        </tr>
+        <tr>
+            <td><b>Hostname : </b>{{ ansible_facts['nodename'] }}</td>
+        </tr>
+        <tr>
+            <td><b>Distribution : </b> {{ ansible_facts['distribution'] }}</td>
+        </tr>
+    </table>
+    <hr style="width:30%;color:white"><br>
+    <button style="width: 70px;"><a style="font-size: 15px;" onClick="window.location.reload()"><b>Refresh</b></a></button>
+</body>
+
+</html>

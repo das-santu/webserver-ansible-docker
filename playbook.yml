@@ -1,0 +1,22 @@
+- name: Installing Docker on Localhost
+  hosts: localhost
+  become: yes
+  roles:
+    - docker
+  tags: docker
+
+- name: Configuring Apache2 Servers
+  hosts: webservers
+  become: yes
+  roles:
+    - common
+    - apache2
+  tags: web, server
+
+- name: Configuring NginX Proxy Servers
+  hosts: proxy
+  become: yes
+  roles:
+    - common
+    - nginx
+  tags: proxy, server

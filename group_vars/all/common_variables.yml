@@ -1,0 +1,10 @@
+http_port: 8000
+https_port: 4443
+html_welcome_msg: "Welcome!"
+
+ntp_server: 0.in.pool.ntp.org
+dns_server_primary: 8.8.8.8
+dns_server_secondary: 8.8.4.4
+
+ansible_user: root
+ansible_password: ansible

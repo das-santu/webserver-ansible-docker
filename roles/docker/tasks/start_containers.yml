@@ -1,0 +1,26 @@
+- name: Create project directory
+  file:
+    path: ~/ansible-project/
+    state: directory
+  become: false
+
+- name: Copying Docker Compose files
+  copy:
+    src: files/{{ item }}
+    dest: ~/ansible-project/{{ item }}
+  loop:
+    - docker-compose.yml
+    - Dockerfile
+  become: false
+
+- name: Build images for docker compose
+  shell:
+    cmd: "docker compose -f docker-compose.yml build"
+    chdir: ~/ansible-project/
+  become: false
+
+- name: Provisioning docker compose containers 
+  shell:
+    cmd: "docker compose -f docker-compose.yml up -d"
+    chdir: ~/ansible-project/
+  become: false

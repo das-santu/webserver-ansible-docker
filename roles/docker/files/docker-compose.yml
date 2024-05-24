@@ -1,0 +1,54 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  web01:
+    image: my-ubuntu-ssh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web01
+    hostname: web01
+    extra_hosts:
+      - proxy:172.28.0.100
+      - web02:172.28.0.102
+    networks: 
+      ansible-network:
+        ipv4_address: 172.28.0.101
+  
+  web02:
+    image: my-ubuntu-ssh
+    container_name: web02
+    hostname: web02
+    depends_on:
+      - web01
+    extra_hosts:
+      - proxy:172.28.0.100
+      - web01:172.28.0.101
+    networks: 
+      ansible-network:
+        ipv4_address: 172.28.0.102
+
+  proxy:
+    image: my-ubuntu-ssh
+    container_name: proxy
+    hostname: proxy
+    ports:
+      - "9099:80"
+    depends_on:
+      - web01
+    extra_hosts:
+      - web01:172.28.0.101
+      - web02:172.28.0.102
+    networks: 
+      ansible-network:
+        ipv4_address: 172.28.0.100
+
+networks:
+  ansible-network:
+    name: ansible-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+          gateway: 172.28.0.1

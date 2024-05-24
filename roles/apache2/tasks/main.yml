@@ -1,0 +1,4 @@
+---
+# tasks file for roles/apache2
+- name: Install Apache2
+  include_tasks: install_apache2.yml
